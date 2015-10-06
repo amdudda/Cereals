@@ -19,14 +19,14 @@ public class Main {
             System.out.println(e.toString());
         }
 
-        //debug: print out price info
+        /*debug: print out price info
         for (Price p:costinfo) {
             System.out.println(p.getIngredient());
             for (Integer i:p.getPriceinfo().keySet() ) {
                 System.out.println("Up to " + i + "kg : $" + p.getPriceinfo().get(i));
             }
         }
-/*
+
         double grand_total = 0;
         for (Cereal c : our_cereals) {
             int units_sold = order.get(c);
@@ -42,6 +42,8 @@ public class Main {
         }
         System.out.println("Grand total for this order is: $" + grand_total);
         */
+
+        System.out.println("50kg of " + costinfo.get(0).getIngredient() + " costs $" + costinfo.get(0).getTotalCost(50) );
     }
 
 

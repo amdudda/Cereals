@@ -13,12 +13,20 @@ public class Main {
 
         ArrayList<Cereal> our_cereals = getData();
         HashMap<Cereal,Integer> order = getOrder(our_cereals);
-        try { getCost(); }
+        ArrayList<Price> costinfo = new ArrayList<Price>();
+        try { costinfo = getCost(); }
         catch (Exception e){
             System.out.println(e.toString());
         }
 
-
+        //debug: print out price info
+        for (Price p:costinfo) {
+            System.out.println(p.getIngredient());
+            for (Integer i:p.getPriceinfo().keySet() ) {
+                System.out.println("Up to " + i + "kg : $" + p.getPriceinfo().get(i));
+            }
+        }
+/*
         double grand_total = 0;
         for (Cereal c : our_cereals) {
             int units_sold = order.get(c);
@@ -33,6 +41,7 @@ public class Main {
             grand_total += totalcost;
         }
         System.out.println("Grand total for this order is: $" + grand_total);
+        */
     }
 
 
@@ -92,7 +101,7 @@ public class Main {
             // if the arraylist already contains the product, just add maxqty and cost to the priceinfo Hashmap
             // otherwise, add the new price object to the arraylist
 
-            // TODO: details of getting the data read in and stored correctly
+            // Done: details of getting the data read in and stored correctly
             for (Price c:pricelist ) {
                 // if the ingredient name already exists, add the price info to the hashmap
                 if (c.getIngredient().equals(ing)) {
@@ -107,7 +116,8 @@ public class Main {
                 pricelist.add(np);
             }
 
-            // and move to the next line
+            // reset found to false and move to the next line
+            found = false;
             line = br.readLine();
         }
 

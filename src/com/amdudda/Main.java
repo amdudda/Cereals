@@ -75,7 +75,7 @@ public class Main {
         double cost;
 
         // gonna read in a bunch of data - set up our data streams
-        String fname = ".\\data\\cost.txt";  // TODO: fix FNF error :(
+        String fname = "./data/cost.txt";
         File f = new File(fname);
         FileReader fr = new FileReader(f);
         BufferedReader br = new BufferedReader(fr);

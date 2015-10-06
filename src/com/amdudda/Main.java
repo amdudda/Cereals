@@ -69,10 +69,11 @@ public class Main {
 
     protected static ArrayList<Price> getCost() throws IOException {
         // created arraylist storing pricing info for each ingredient
-        ArrayList<Price> p = new ArrayList<Price>();
+        ArrayList<Price> pricelist = new ArrayList<Price>();
         String ing;
         int maxqty;
         double cost;
+        boolean found = false;
 
         // gonna read in a bunch of data - set up our data streams
         String fname = "./data/cost.txt";
@@ -92,10 +93,19 @@ public class Main {
             // otherwise, add the new price object to the arraylist
 
             // TODO: details of getting the data read in and stored correctly
-            // testing: proof I'm reading in the data.
-            System.out.println(ing);
-            System.out.println(maxqty);
-            System.out.println(cost);
+            for (Price c:pricelist ) {
+                // if the ingredient name already exists, add the price info to the hashmap
+                if (c.getIngredient().equals(ing)) {
+                    c.addPriceInfo(maxqty,cost);
+                    found = true;
+                    break;
+                } // end if
+            } // end for-each
+            if (!found) {
+                Price np = new Price(ing);
+                np.addPriceInfo(maxqty,cost);
+                pricelist.add(np);
+            }
 
             // and move to the next line
             line = br.readLine();
@@ -104,8 +114,9 @@ public class Main {
         //close our filestreams
         br.close();
         fr.close();
+
         // return our arraylist of pricing info
-        return p;
+        return pricelist;
     }
 
 }

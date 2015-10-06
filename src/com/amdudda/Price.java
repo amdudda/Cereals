@@ -35,4 +35,9 @@ public class Price {
     public void setPriceinfo(HashMap<Integer, Double> priceinfo) {
         this.priceinfo = priceinfo;
     }
+
+    // and some other methods
+    public void addPriceInfo(Integer maxunits, Double cost){
+        this.priceinfo.put(maxunits,cost);
+    }
 }

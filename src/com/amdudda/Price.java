@@ -20,7 +20,6 @@ public class Price {
 
     // a bunch of getters and setters
 
-
     public String getIngredient() {
         return ingredient;
     }

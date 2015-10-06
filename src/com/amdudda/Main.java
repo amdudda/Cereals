@@ -1,4 +1,8 @@
 package com.amdudda;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -62,6 +66,42 @@ public class Main {
         // close the scanner
         s.close();
         return o;
+    }
+
+    protected static ArrayList<Price> getCost() throws IOException {
+        // created arraylist storing pricing info for each ingredient
+        ArrayList<Price> p = new ArrayList<Price>();
+        String ing;
+        int maxqty;
+        double cost;
+
+        // gonna read in a bunch of data - set up our data streams
+        File f = new File(".\\data\\cost.txt");
+        FileReader fr = new FileReader(f);
+        BufferedReader br = new BufferedReader(fr);
+
+        // read in our first line
+        String line = br.readLine();
+        // and start processing our data
+        while (line !=null) {
+            // extract the data we need to work with
+            ing = line.substring(0,line.indexOf(" "));
+            maxqty = Integer.parseInt(line.substring(line.indexOf(" ") + 1, line.lastIndexOf(" ")));
+            cost = Double.parseDouble(line.substring(line.lastIndexOf(" ") + 1));
+            // if the arraylist already contains the product, just add maxqty and cost to the priceinfo Hashmap
+            // otherwise, add the new price object to the arraylist
+
+            // TODO: details of getting the data read in and stored correctly
+
+            // and move to the next line
+            line = br.readLine();
+        }
+
+        //close our filestreams
+        br.close();
+        fr.close();
+        // return our arraylist of pricing info
+        return p;
     }
 
 }

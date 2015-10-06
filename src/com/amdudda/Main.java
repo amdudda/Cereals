@@ -3,6 +3,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -42,8 +43,13 @@ public class Main {
         }
         System.out.println("Grand total for this order is: $" + grand_total);
         */
+        System.out.println("testing rice array");
+        ArrayList<Integer> test = costinfo.get(1).sortedQtys();
+        for (Integer i: test) System.out.println(i);
 
-        System.out.println("50kg of " + costinfo.get(0).getIngredient() + " costs $" + costinfo.get(0).getTotalCost(50) );
+        for (Price x:costinfo) {
+            System.out.println("50kg of " + x.getIngredient() + " costs $" + x.getTotalCost(50) );
+        }
     }
 
 

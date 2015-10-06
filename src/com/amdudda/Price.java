@@ -50,13 +50,16 @@ public class Price {
 
         for (Integer q:maxqty){
             if (q == 0) totalCost = costs.get(q);
-            if (qty < q) totalCost = costs.get(q);
+            if (qty < q) {
+                totalCost = costs.get(q);
+                break;
+            }
         }
 
         return totalCost*qty;
     }
 
-    private ArrayList<Integer> sortedQtys() {
+    public ArrayList<Integer> sortedQtys() {
         // returns hashmap keys, sorted in order, with "0" (our dummy number for "default") moved to the end.
         ArrayList<Integer> to_sort = new ArrayList<Integer>();
         int to_move;
@@ -67,7 +70,7 @@ public class Price {
         // now sort it
         for (int i=0; i<to_sort.size(); i++) {
             for (int j=0; j<to_sort.size(); j++){
-                if (to_sort.get(i) > to_sort.get(j)) {
+                if (to_sort.get(i) < to_sort.get(j)) {
                     to_move = to_sort.get(i);
                     to_sort.set(i,to_sort.get(j));
                     to_sort.set(j,to_move);

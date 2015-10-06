@@ -13,7 +13,7 @@ public class Main {
 
         ArrayList<Cereal> our_cereals = getData();
         HashMap<Cereal,Integer> order = getOrder(our_cereals);
-        try{ getCost(); }
+        try { getCost(); }
         catch (Exception e){
             System.out.println(e.toString());
         }

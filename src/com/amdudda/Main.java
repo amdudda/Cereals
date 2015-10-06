@@ -9,17 +9,16 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         ArrayList<Cereal> our_cereals = getData();
         HashMap<Cereal,Integer> order = getOrder(our_cereals);
-        /*
-        Ingredient rice = new Ingredient("rice",units_sold * rc.getRice()/1000);
-        Ingredient sugar = new Ingredient("sugar", units_sold * rc.getSugar()/1000);
-        System.out.println(rice.getName() + " " + rice.getWeight() + "kg = $" + rice.getCost() );
-        System.out.println(sugar.getName() + " " + sugar.getWeight() + "kg = $" + sugar.getCost() );
-        System.out.println("rice and sugar for " + units_sold + " units = $" + (rice.getCost() + sugar.getCost()));
-*/
+        try{ getCost(); }
+        catch (Exception e){
+            System.out.println(e.toString());
+        }
+
+
         double grand_total = 0;
         for (Cereal c : our_cereals) {
             int units_sold = order.get(c);
@@ -76,7 +75,8 @@ public class Main {
         double cost;
 
         // gonna read in a bunch of data - set up our data streams
-        File f = new File(".\\data\\cost.txt");
+        String fname = ".\\data\\cost.txt";  // TODO: fix FNF error :(
+        File f = new File(fname);
         FileReader fr = new FileReader(f);
         BufferedReader br = new BufferedReader(fr);
 
@@ -92,6 +92,10 @@ public class Main {
             // otherwise, add the new price object to the arraylist
 
             // TODO: details of getting the data read in and stored correctly
+            // testing: proof I'm reading in the data.
+            System.out.println(ing);
+            System.out.println(maxqty);
+            System.out.println(cost);
 
             // and move to the next line
             line = br.readLine();

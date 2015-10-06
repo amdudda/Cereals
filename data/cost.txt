@@ -1,0 +1,10 @@
+corn 80 .50
+corn 0 .41
+rice 100 .50
+rice 500 .43
+rice 0 .30
+sugar 200 1.15
+sugar 0 .95
+salt 0 .70
+oats 70 .65
+oats 0 .52

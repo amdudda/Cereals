@@ -48,7 +48,7 @@ public class Main {
         for (Integer i: test) System.out.println(i);
 
         for (Price x:costinfo) {
-            System.out.println("50kg of " + x.getIngredient() + " costs $" + x.getTotalCost(50) );
+            System.out.println("250kg of " + x.getIngredient() + " costs $" + x.getTotalCost(250) );
         }
     }
 
@@ -101,7 +101,7 @@ public class Main {
         // read in our first line
         String line = br.readLine();
         // and start processing our data
-        while (line !=null) {
+        while ( !(line.equals("/*")) && line != null) {
             // extract the data we need to work with
             ing = line.substring(0,line.indexOf(" "));
             maxqty = Integer.parseInt(line.substring(line.indexOf(" ") + 1, line.lastIndexOf(" ")));

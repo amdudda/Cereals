@@ -8,3 +8,24 @@ sugar 0 .95
 salt 0 .70
 oats 70 .65
 oats 0 .52
+/*
+  DESCRIPTION
+  This file lists price info for ingredients in the format of:
+  ingredient_name [space] maxqty [space] price
+
+  maxqty is the cutoff for the listed price, so
+  "corn 80 .50" means "the price of less than 80 kg of corn is $0.50 per kg"
+
+  Thus,
+  rice 100 .50
+  rice 500 .43
+  rice 0 .30
+
+  means:
+  "if the weight of the order of rice is less than 100kg, the price is 50 cents per kg.
+  if the weight of the order of rice is 100kg or more, but less than 500 kg, the price is 43 cents per kg.
+  if the order weighs 500 kg or more, the price is 30 cents per kg"
+
+  notice that this is a... *ahem*... "special" use of zero to mean "default value".
+
+*/

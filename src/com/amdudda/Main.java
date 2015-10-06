@@ -12,13 +12,15 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        ArrayList<Cereal> our_cereals = getData();
-        HashMap<Cereal,Integer> order = getOrder(our_cereals);
+        // set up our cost information
         ArrayList<Price> costinfo = new ArrayList<Price>();
         try { costinfo = getCost(); }
         catch (Exception e){
             System.out.println(e.toString());
         }
+        ArrayList<Cereal> our_cereals = getData();
+        HashMap<Cereal,Integer> order = getOrder(our_cereals);
+
 
         /*debug: print out price info
         for (Price p:costinfo) {

@@ -1,0 +1,9 @@
+Rice Crunchies    0    400    20    1    0
+Morning Flakes    350    0    40    1    0
+Trianglz    200    200    35    .5    0
+Hoops    120    0    25    1    350
+
+/*
+  Tab-delimited Ingredient data for various cereals, in the format
+  name  corn    rice    sugar   salt    oats
+*/

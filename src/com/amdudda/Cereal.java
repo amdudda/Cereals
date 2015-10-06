@@ -69,7 +69,7 @@ public class Cereal {
         return grams / 1000;
     }
 
-    public ArrayList<Ingredient> getIngredients(int units) {
+    protected ArrayList<Ingredient> getIngredients(int units) {
         // note that we convert this into a weight in kg.
         ArrayList<Ingredient> ing_list = new ArrayList<Ingredient>();
         ing_list.add(new Ingredient("rice", units * this.wt_g_in_kg(this.rice)));
@@ -78,5 +78,16 @@ public class Cereal {
         ing_list.add(new Ingredient("salt", units * this.wt_g_in_kg(this.salt)));
         ing_list.add(new Ingredient("oats", units * this.wt_g_in_kg(this.oats)));
         return ing_list;
+    }
+
+    protected void printIngredients() {
+        // prints out our ingredients
+        System.out.printf("Ingredients for %s:\n", this.name);
+        System.out.printf("\tCorn: %.2f", this.corn);
+        System.out.printf("\tRice: %.2f", this.rice);
+        System.out.printf("\tSugar: %.2f", this.sugar);
+        System.out.printf("\tSalt: %.2f", this.salt);
+        System.out.printf("\tOats: %.2f", this.oats);
+
     }
 }

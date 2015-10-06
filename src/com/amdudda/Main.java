@@ -3,9 +3,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.DoubleSummaryStatistics;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -22,30 +20,22 @@ public class Main {
         ArrayList<Cereal> our_cereals = getData();
         HashMap<Cereal,Integer> order = getOrder(our_cereals);
 
+        // debug: print out recipies
+        for (Cereal c:our_cereals) {
+            c.printIngredients();
+            System.out.printf("\n");
+        }
 
-        /*debug: print out price info
+        /* debug: print out price info
         for (Price p:costinfo) {
             System.out.println(p.getIngredient());
             for (Integer i:p.getPriceinfo().keySet() ) {
                 System.out.println("Up to " + i + "kg : $" + p.getPriceinfo().get(i));
             }
         }
-
-        double grand_total = 0;
-        for (Cereal c : our_cereals) {
-            int units_sold = order.get(c);
-            ArrayList<Ingredient> recipe = c.getIngredients(units_sold);
-            System.out.println(c.getName() + ":  " + units_sold + " units");
-            double totalcost = 0;
-            for (Ingredient ing : recipe) {
-                System.out.println(ing.getName() + " " + ing.getWeight() + "kg = $" + ing.getCost());
-                totalcost += ing.getCost();
-            }
-            System.out.println("total cost is: $" + totalcost + "\n");
-            grand_total += totalcost;
-        }
-        System.out.println("Grand total for this order is: $" + grand_total);
         */
+
+        /*
         System.out.println("testing rice array");
         ArrayList<Integer> test = costinfo.get(1).sortedQtys();
         for (Integer i: test) System.out.println(i);
@@ -53,6 +43,7 @@ public class Main {
         for (Price x:costinfo) {
             System.out.println("250kg of " + x.getIngredient() + " costs $" + x.getTotalCost(250) );
         }
+        */
     }
 
 
@@ -88,10 +79,13 @@ public class Main {
                 cereal.add(amt);
                 if (c_info.indexOf(",") != -1) c_info = c_info.substring(eod + 1);
             }
+            // create the cereal
             Cereal nc = new Cereal(cname,cereal.get(0),cereal.get(1),cereal.get(2),
                     cereal.get(3), cereal.get(4));
-
+            // add the cereal to the array of cereals
+            c_list.add(nc);
             // move to the next line
+            cereal.clear();
             c_info = br.readLine();
         } // end while
 

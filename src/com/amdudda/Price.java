@@ -42,24 +42,24 @@ public class Price {
         this.priceinfo.put(maxunits,cost);
     }
 
-    public Double getTotalCost(int qty) {
+    public Double getTotalCost(double weight) {
         // returns the total cost of an ingredient based on the quantity ordered.
         Double totalCost = 0d;
         HashMap<Integer,Double> costs = this.getPriceinfo();
-        ArrayList<Integer> maxqty = this.sortedQtys();
+        ArrayList<Integer> max_wt = this.sortedQtys();
 
-        for (Integer q:maxqty){
-            if (q == 0) totalCost = costs.get(q);
-            if (qty < q) {
-                totalCost = costs.get(q);
+        for (Integer w:max_wt){
+            if (w == 0) totalCost = costs.get(w);
+            if (weight < w) {
+                totalCost = costs.get(w);
                 break;
             }
         }
 
-        return totalCost*qty;
+        return totalCost*weight;
     }
 
-    public ArrayList<Integer> sortedQtys() {
+    private ArrayList<Integer> sortedQtys() {
         // returns hashmap keys, sorted in order, with "0" (our dummy number for "default") moved to the end.
         ArrayList<Integer> to_sort = new ArrayList<Integer>();
         int to_move;

@@ -21,7 +21,6 @@ public class Cereal {
         this.sugar = sugar;
         this.salt = salt;
         this.oats = oats;
-
     }
 
     //Creating Setter and Getter
@@ -45,6 +44,10 @@ public class Cereal {
         return rice;
     }
 
+    public double getOats() {
+        return oats;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -65,18 +68,25 @@ public class Cereal {
         this.salt = salt;
     }
 
-    public double wt_g_in_kg(double grams) {
+    public void setOats(double oats) {
+        this.oats = oats;
+    }
+
+    // and miscellaneous methods
+
+    private double wt_g_in_kg(double grams) {
         return grams / 1000;
     }
 
-    protected ArrayList<Ingredient> getIngredients(int units) {
+    protected ArrayList<Double> getIngredients(int units) {
         // note that we convert this into a weight in kg.
-        ArrayList<Ingredient> ing_list = new ArrayList<Ingredient>();
-        ing_list.add(new Ingredient("rice", units * this.wt_g_in_kg(this.rice)));
-        ing_list.add(new Ingredient("corn", units * this.wt_g_in_kg(this.corn)));
-        ing_list.add(new Ingredient("sugar", units * this.wt_g_in_kg(this.sugar)));
-        ing_list.add(new Ingredient("salt", units * this.wt_g_in_kg(this.salt)));
-        ing_list.add(new Ingredient("oats", units * this.wt_g_in_kg(this.oats)));
+        // returns the total weight for a given cereal's order
+        ArrayList<Double> ing_list = new ArrayList<Double>();
+        ing_list.add(units * this.wt_g_in_kg(this.rice));
+        ing_list.add(units * this.wt_g_in_kg(this.corn));
+        ing_list.add(units * this.wt_g_in_kg(this.sugar));
+        ing_list.add(units * this.wt_g_in_kg(this.salt));
+        ing_list.add(units * this.wt_g_in_kg(this.oats));
         return ing_list;
     }
 

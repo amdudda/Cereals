@@ -30,22 +30,43 @@ public class Main {
         System.out.printf("Total cost for entire order: $%.2f", totalCost);
     }
 
-    private static double calculateTotalCost(HashMap<Cereal, Integer> order, ArrayList<Cereal> our_cereals, ArrayList<Price> costinfo) {
+    private static double calculateTotalCost(HashMap<Cereal, Integer> o, ArrayList<Cereal> oc, ArrayList<Price> ci) {
         // calculates the total cost
-        double grand_total=0d;
+        double grand_total=0d, toadd;
         int units;
         String hkey;
 
 
         // this doesn't do anything yet
         /*
-        for (Cereal c:our_cereals) {
-            hkey = c.getName();
-
-            units = order.get(hkey);
-
-        }
+        Logic for program: create fake cereal that holds the total weights for all ingredients.
+        Each cereal has a getIngredients method that takes the units ordered for that cereal and returns
+        a hashmap with the total weight of ingredients in kg for that cereal.
+        Then return getTotalCost for each ingredient and add it to grand_total.
         */
+        // create and populate arraylist storing totals & amounts for a given cereal
+        ArrayList<Double> totals = new ArrayList<Double>();
+        for (int i=0; i<5; i++) { totals.add(0d); }
+        ArrayList<Double> fetchIngs;
+
+        for (Cereal c:oc) {
+            units = o.get(c);  // how many units of that cereal
+            fetchIngs = c.getIngredients(units);
+            for (int j=0; j<totals.size(); j++) {
+                toadd = totals.get(j) + fetchIngs.get(j);
+                totals.set(j, toadd);
+            }
+        }
+        Cereal fakecereal = new Cereal("Total of All Cereals",totals.get(0),totals.get(1),totals.get(2),
+                totals.get(3),totals.get(4));
+
+        // now run through price and calculate the total cost for each ingredient
+        for (Price p:ci) {
+            grand_total += p.getTotalCost(fakecereal.getCorn()) + p.getTotalCost(fakecereal.getRice()) +
+                    p.getTotalCost(fakecereal.getSalt()) + p.getTotalCost(fakecereal.getSugar()) +
+                    p.getTotalCost(fakecereal.getOats());
+        }
+
         return grand_total;
     }
 

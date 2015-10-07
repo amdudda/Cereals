@@ -26,24 +26,27 @@ public class Main {
             System.out.printf("\n");
         }
 
-        /* debug: print out price info
-        for (Price p:costinfo) {
-            System.out.println(p.getIngredient());
-            for (Integer i:p.getPriceinfo().keySet() ) {
-                System.out.println("Up to " + i + "kg : $" + p.getPriceinfo().get(i));
-            }
-        }
-        */
+        Double totalCost = calculateTotalCost(order,our_cereals,costinfo);
+        System.out.printf("Total cost for entire order: $%.2f", totalCost);
+    }
 
+    private static double calculateTotalCost(HashMap<Cereal, Integer> order, ArrayList<Cereal> our_cereals, ArrayList<Price> costinfo) {
+        // calculates the total cost
+        double grand_total=0d;
+        int units;
+        String hkey;
+
+
+        // this doesn't do anything yet
         /*
-        System.out.println("testing rice array");
-        ArrayList<Integer> test = costinfo.get(1).sortedQtys();
-        for (Integer i: test) System.out.println(i);
+        for (Cereal c:our_cereals) {
+            hkey = c.getName();
 
-        for (Price x:costinfo) {
-            System.out.println("250kg of " + x.getIngredient() + " costs $" + x.getTotalCost(250) );
+            units = order.get(hkey);
+
         }
         */
+        return grand_total;
     }
 
 
@@ -108,7 +111,7 @@ public class Main {
         for (Cereal c:oc){
             System.out.println("How many units of " + c.getName() + " were ordered?");
             qty = s.nextInt();
-            o.put(c, qty);  // for now, 800 units per cereal in the order
+            o.put(c, qty);
         }
         // close the scanner
         s.close();

@@ -20,14 +20,16 @@ public class Main {
         ArrayList<Cereal> our_cereals = getData();
         HashMap<Cereal,Integer> order = getOrder(our_cereals);
 
-        // debug: print out recipies
+       /*
+       // debug: print out recipies
         for (Cereal c:our_cereals) {
             c.printIngredients();
             System.out.printf("\n");
         }
+        */
 
         Double totalCost = calculateTotalCost(order,our_cereals,costinfo);
-        System.out.printf("Total cost for entire order: $%.2f", totalCost);
+        System.out.printf("\nTotal cost for entire order: $%.2f", totalCost);
     }
 
     private static double calculateTotalCost(HashMap<Cereal, Integer> o, ArrayList<Cereal> oc, ArrayList<Price> ci) {
@@ -36,8 +38,6 @@ public class Main {
         int units;
         String hkey;
 
-
-        // this doesn't do anything yet
         /*
         Logic for program: create fake cereal that holds the total weights for all ingredients.
         Each cereal has a getIngredients method that takes the units ordered for that cereal and returns
@@ -53,6 +53,8 @@ public class Main {
         }
         HashMap<String,Double> cur_c_ings;
 
+        // go through each cereal and calculate how much of each ingredient needs to be added to
+        // our total so we can generate a grand-total price for the entire order.
         for (Cereal c:oc) {
             cur_c_ings = c.getAllIngredients();
             for (String ing:cur_c_ings.keySet()) {
@@ -60,17 +62,12 @@ public class Main {
                 toadd = cur_c_ings.get(ing) * units;
                 curval = totals.get(ing);
                 totals.put(ing,curval+toadd);
-                // fetchIngs = c.getIngredients(units);
             }
         }
-        Cereal fakecereal = new Cereal("Total of All Cereals",totals);
+        Cereal fakecereal = new Cereal("all cereals in the order",totals);
 
-        // debugging: print out the weight of all cereals for the order
-        System.out.print("List of weights for the entire order:\n\t");
-        for (String ing:fakecereal.getAllIngredients().keySet()) {
-            System.out.print(ing + ": " + fakecereal.getAllIngredients().get(ing) + "kg\t");
-        }
-        System.out.println("\n");
+        // print out the weight and cost of all cereals for the order
+        printCostInfo(fakecereal,ci);
 
         // now run through price and calculate the total cost for each ingredient
         for (Price p:ci) {
@@ -81,6 +78,16 @@ public class Main {
         }
 
         return grand_total;
+    }
+
+    private static void printCostInfo(Cereal fakecereal, ArrayList<Price> ci) {
+        fakecereal.printIngredientsKg();
+        System.out.println("Cost of ingredients:");
+        for (Price p:ci) {
+            String output = ("\t" + p.getIngredient() + ": ");
+            output += String.format("$%.2f",p.getTotalCost(fakecereal.getAllIngredients().get(p.getIngredient())));
+            System.out.print(output);
+        }
     }
 
 
@@ -99,7 +106,6 @@ public class Main {
         ArrayList<Cereal> c_list = new ArrayList<Cereal>();
         HashMap<String, Double> cereal = new HashMap<String, Double>();
         ArrayList<String> ingredients = new ArrayList<String>();
-        //Integer arrsize = Integer.parseInt(c_info.substring(c_info.indexOf(":")+1));
 
         c_info = c_info.substring(c_info.indexOf(":")+1);
         while (c_info != "" && c_info != null) {
@@ -137,7 +143,8 @@ public class Main {
             Cereal nc = new Cereal(cname,cereal);
             // add the cereal to the array of cereals
             c_list.add(nc);
-            // move to the next line and don't forget we need a new hashmap of data (cereal.clear() clears the HM we just created)
+            // move to the next line and don't forget we need a new hashmap of data
+            // (cereal.clear() clears the HM we just created rather than allowing us to generate new data)
             cereal = new HashMap<String,Double>();
             c_info = br.readLine();
         } // end while

@@ -74,4 +74,13 @@ public class Cereal {
             System.out.printf("\t" + ing + ": %.1fg", this.getIngredient(ing)*1000);
         }
     }
+
+    protected void printIngredientsKg() {
+        // prints out our ingredients' weights in kilograms; useful for displaying a grand-totals order.
+        System.out.printf("Ingredients for %s:\n", this.name);
+        for (String ing:this.ingredients.keySet()) {
+            System.out.printf("\t" + ing + ": %.1fkg", this.getIngredient(ing));
+        }
+        System.out.print("\n");
+    }
 }

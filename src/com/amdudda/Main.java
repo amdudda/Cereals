@@ -62,9 +62,14 @@ public class Main {
 
         // now run through price and calculate the total cost for each ingredient
         for (Price p:ci) {
-            grand_total += p.getTotalCost(fakecereal.getCorn()) + p.getTotalCost(fakecereal.getRice()) +
+            for (String ing:fakecereal.getAllIngredients().keySet()) {
+                grand_total += p.getTotalCost(fakecereal.getIngredient(ing));
+            }
+            /*
+            grand_total += p.getTotalCost(fakecereal.getIngredient("corn")) + p.getTotalCost(fakecereal.getRice()) +
                     p.getTotalCost(fakecereal.getSalt()) + p.getTotalCost(fakecereal.getSugar()) +
                     p.getTotalCost(fakecereal.getOats());
+                    */
         }
 
         return grand_total;

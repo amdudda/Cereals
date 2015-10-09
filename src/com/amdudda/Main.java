@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Main {
 
@@ -36,21 +37,22 @@ public class Main {
         // calculates the total cost
         double grand_total=0d, toadd, curval;
         int units;
-        String hkey;
 
         /*
-        Logic for program: create fake cereal that holds the total weights for all ingredients.
+        Logic for program:
         Each cereal has a getIngredients method that takes the units ordered for that cereal and returns
         a hashmap with the total weight of ingredients in kg for that cereal.
+        Create fake cereal that holds the total weights for all ingredients.
         Then return getTotalCost for each ingredient and add it to grand_total.
         */
         // create and populate hashmap storing total weight of all ingredients for our fake cereal
         HashMap<String,Double> totals = new HashMap<String,Double>();
         // initialize the Hashmap with the list of ingredients - pick the first cereal in the oc ArrayList
         // just to extract the list of possible ingredients
-        for (String i:oc.get(0).getAllIngredients().keySet()) {
+        Set<String> list_of_ingrs = oc.get(0).getAllIngredients().keySet();
+        for (String i: list_of_ingrs) {
             totals.put(i,0d);
-        }
+        } // end for each
         HashMap<String,Double> cur_c_ings;
 
         // go through each cereal and calculate how much of each ingredient needs to be added to
@@ -71,25 +73,24 @@ public class Main {
 
         // now run through price and calculate the total cost for each ingredient
         for (Price p:ci) {
-            for (String ing:fakecereal.getAllIngredients().keySet()) {
-                grand_total += p.getTotalCost(fakecereal.getIngredient(ing));
-            }
-
-        }
+            String ing = p.getIngredient();
+            grand_total += p.getTotalCost(fakecereal.getIngredientWeight(ing));
+        } // end for
 
         return grand_total;
-    }
+    } // end calculateTotalCost
 
     private static void printCostInfo(Cereal fakecereal, ArrayList<Price> ci) {
         fakecereal.printIngredientsKg();
         System.out.println("Cost of ingredients:");
         for (Price p:ci) {
-            String output = ("\t" + p.getIngredient() + ": ");
-            output += String.format("$%.2f",p.getTotalCost(fakecereal.getAllIngredients().get(p.getIngredient())));
+            String ingredient = p.getIngredient();
+            String output = ("\t" + ingredient + ": ");
+            HashMap<String, Double> fc_allingr = fakecereal.getAllIngredients();
+            output += String.format("$%.2f",p.getTotalCost(fc_allingr.get(ingredient)));
             System.out.print(output);
         }
-    }
-
+    }  // end printCostInfo
 
     public static ArrayList<Cereal> getData() throws IOException {
         // Read in data from recipies.txt and create our cereals from that.

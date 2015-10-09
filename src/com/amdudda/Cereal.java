@@ -19,31 +19,19 @@ public class Cereal {
     private double oats;
     */
 
-    //Creating Constructor
-    public Cereal(String cerealName, double corn, double rice, double sugar, double salt, double oats) {
-        this.name = cerealName;
-        this.ingredients = new HashMap<String,Double>();
-        // TODO: need to automate read-in of ingredient names.
-        this.ingredients.put("corn",corn);
-        this.ingredients.put("rice",rice);
-        this.ingredients.put("sugar",sugar);
-        this.ingredients.put("salt",salt);
-        this.ingredients.put("oats",oats);
-    }
-
-    // overloading constructor for future code implementation
+    // Constructor
     public Cereal(String cerealName, HashMap<String,Double> ingList) {
         this.name = cerealName;
         this.ingredients = ingList;
     }
-    // end constructors
+    // end constructor
 
     //Creating Setter and Getter
     public String getName() {
         return name;
     }
 
-    public Double getIngredient(String ingName) {
+    public Double getIngredientWeight(String ingName) {
         return this.ingredients.get(ingName);
     }
 
@@ -52,17 +40,13 @@ public class Cereal {
     }
 
     // and miscellaneous methods
-/*
-    private double wt_g_in_kg(double grams) {
-        return grams / 1000;
-    }
-*/
+
     protected ArrayList<Double> getIngredients(int units) {
         // note that we convert this into a weight in kg.
         // returns the total weight for a given cereal's order
         ArrayList<Double> ing_list = new ArrayList<Double>();
         for (String ing:this.ingredients.keySet()) {
-            ing_list.add(units * this.getIngredient(ing));
+            ing_list.add(units * this.getIngredientWeight(ing));
         }
         return ing_list;
     }
@@ -71,7 +55,7 @@ public class Cereal {
         // prints out our ingredients' weights in grams
         System.out.printf("Ingredients for %s:\n", this.name);
         for (String ing:this.ingredients.keySet()) {
-            System.out.printf("\t" + ing + ": %.1fg", this.getIngredient(ing)*1000);
+            System.out.printf("\t" + ing + ": %.1fg", this.getIngredientWeight(ing)*1000);
         }
     }
 
@@ -79,7 +63,7 @@ public class Cereal {
         // prints out our ingredients' weights in kilograms; useful for displaying a grand-totals order.
         System.out.printf("Ingredients for %s:\n", this.name);
         for (String ing:this.ingredients.keySet()) {
-            System.out.printf("\t" + ing + ": %.1fkg", this.getIngredient(ing));
+            System.out.printf("\t" + ing + ": %.1fkg", this.getIngredientWeight(ing));
         }
         System.out.print("\n");
     }

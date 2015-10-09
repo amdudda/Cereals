@@ -19,16 +19,11 @@ public class Main {
             System.out.println(e.toString());
         }
         ArrayList<Cereal> our_cereals = getData();
+
+        // determine how much of each cereal has been ordered
         HashMap<Cereal,Integer> order = getOrder(our_cereals);
 
-       /*
-       // debug: print out recipies
-        for (Cereal c:our_cereals) {
-            c.printIngredients();
-            System.out.printf("\n");
-        }
-        */
-
+        // and print out the total cost of the entire order
         Double totalCost = calculateTotalCost(order,our_cereals,costinfo);
         System.out.printf("\nTotal cost for entire order: $%.2f", totalCost);
     }

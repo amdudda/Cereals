@@ -7,4 +7,5 @@ Hoops,120,0,25,1,350
   Comma-delimited Ingredient data for various cereals, in the format
   name  corn    rice    sugar   salt    oats
   First line contains the list of ingredients
+  Weights are noted in grams.
 */

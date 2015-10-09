@@ -44,14 +44,13 @@ public class Main {
         a hashmap with the total weight of ingredients in kg for that cereal.
         Then return getTotalCost for each ingredient and add it to grand_total.
         */
-        // create and populate arraylist storing totals & amounts for a given cereal
+        // create and populate hashmap storing total weight of all ingredients for our fake cereal
         HashMap<String,Double> totals = new HashMap<String,Double>();
-        //for (int i=0; i<5; i++) { totals.add(0d); }
-        // initialize the Hashmap with the list of ingredients - pick the first cereal just to extract the ingredients
+        // initialize the Hashmap with the list of ingredients - pick the first cereal in the oc ArrayList
+        // just to extract the list of possible ingredients
         for (String i:oc.get(0).getAllIngredients().keySet()) {
             totals.put(i,0d);
         }
-        ArrayList<Double> fetchIngs;
         HashMap<String,Double> cur_c_ings;
 
         for (Cereal c:oc) {
@@ -63,14 +62,15 @@ public class Main {
                 totals.put(ing,curval+toadd);
                 // fetchIngs = c.getIngredients(units);
             }
-            /*
-            for (int j=0; j<totals.size(); j++) {
-                toadd = totals.get(j) + fetchIngs.get(j);
-                totals.set(j, toadd);
-            }
-            */
         }
         Cereal fakecereal = new Cereal("Total of All Cereals",totals);
+
+        // debugging: print out the weight of all cereals for the order
+        System.out.print("List of weights for the entire order:\n\t");
+        for (String ing:fakecereal.getAllIngredients().keySet()) {
+            System.out.print(ing + ": " + fakecereal.getAllIngredients().get(ing) + "kg\t");
+        }
+        System.out.println("\n");
 
         // now run through price and calculate the total cost for each ingredient
         for (Price p:ci) {

@@ -32,7 +32,7 @@ public class Main {
 
     private static double calculateTotalCost(HashMap<Cereal, Integer> o, ArrayList<Cereal> oc, ArrayList<Price> ci) {
         // calculates the total cost
-        double grand_total=0d, toadd;
+        double grand_total=0d, toadd, curval;
         int units;
         String hkey;
 
@@ -45,31 +45,39 @@ public class Main {
         Then return getTotalCost for each ingredient and add it to grand_total.
         */
         // create and populate arraylist storing totals & amounts for a given cereal
-        ArrayList<Double> totals = new ArrayList<Double>();
-        for (int i=0; i<5; i++) { totals.add(0d); }
+        HashMap<String,Double> totals = new HashMap<String,Double>();
+        //for (int i=0; i<5; i++) { totals.add(0d); }
+        // initialize the Hashmap with the list of ingredients - pick the first cereal just to extract the ingredients
+        for (String i:oc.get(0).getAllIngredients().keySet()) {
+            totals.put(i,0d);
+        }
         ArrayList<Double> fetchIngs;
+        HashMap<String,Double> cur_c_ings;
 
         for (Cereal c:oc) {
-            units = o.get(c);  // how many units of that cereal
-            fetchIngs = c.getIngredients(units);
+            cur_c_ings = c.getAllIngredients();
+            for (String ing:cur_c_ings.keySet()) {
+                units = o.get(c);  // how many units of that cereal
+                toadd = cur_c_ings.get(ing) * units;
+                curval = totals.get(ing);
+                totals.put(ing,curval+toadd);
+                // fetchIngs = c.getIngredients(units);
+            }
+            /*
             for (int j=0; j<totals.size(); j++) {
                 toadd = totals.get(j) + fetchIngs.get(j);
                 totals.set(j, toadd);
             }
+            */
         }
-        Cereal fakecereal = new Cereal("Total of All Cereals",totals.get(0),totals.get(1),totals.get(2),
-                totals.get(3),totals.get(4));
+        Cereal fakecereal = new Cereal("Total of All Cereals",totals);
 
         // now run through price and calculate the total cost for each ingredient
         for (Price p:ci) {
             for (String ing:fakecereal.getAllIngredients().keySet()) {
                 grand_total += p.getTotalCost(fakecereal.getIngredient(ing));
             }
-            /*
-            grand_total += p.getTotalCost(fakecereal.getIngredient("corn")) + p.getTotalCost(fakecereal.getRice()) +
-                    p.getTotalCost(fakecereal.getSalt()) + p.getTotalCost(fakecereal.getSugar()) +
-                    p.getTotalCost(fakecereal.getOats());
-                    */
+
         }
 
         return grand_total;
@@ -87,10 +95,26 @@ public class Main {
         String c_info = br.readLine();
 
         // set up variables to hold the data we read in
-        int eod;
+        int eod;  // variable to store the index of the string to stop at when reading in the next bit of data
         ArrayList<Cereal> c_list = new ArrayList<Cereal>();
-        ArrayList<Double> cereal = new ArrayList<Double>();
-        Integer arrsize = Integer.parseInt(c_info.substring(c_info.indexOf(":")+1));
+        HashMap<String, Double> cereal = new HashMap<String, Double>();
+        ArrayList<String> ingredients = new ArrayList<String>();
+        //Integer arrsize = Integer.parseInt(c_info.substring(c_info.indexOf(":")+1));
+
+        c_info = c_info.substring(c_info.indexOf(":")+1);
+        while (c_info != "" && c_info != null) {
+            if ( c_info.indexOf(",") == -1 ) { eod = c_info.length(); }
+            else { eod = c_info.indexOf(","); }
+            String ingr = c_info.substring(0, eod);
+            ingredients.add(ingr);
+            if (c_info.indexOf(",") != -1) {
+                c_info = c_info.substring(eod + 1);
+            } else {
+                c_info = "";
+            } // end if-else
+        }
+
+        Integer arrsize = ingredients.size();
 
         // next line of the file contains our first row of data
         c_info = br.readLine();
@@ -101,20 +125,20 @@ public class Main {
             String cname = c_info.substring(0,eod);
             c_info = c_info.substring(eod+1);
 
-            for (int i=0; i<arrsize; i++) {
+            for (String i:ingredients) {
                 if ( c_info.indexOf(",") == -1 ) { eod = c_info.length(); }
                 else { eod = c_info.indexOf(","); }
-                Double amt = Double.parseDouble(c_info.substring(0, eod));
-                cereal.add(amt);
+                // our source data is in grams, but our program expects kilograms
+                Double amt = Double.parseDouble(c_info.substring(0, eod)) / 1000;
+                cereal.put(i,amt);
                 if (c_info.indexOf(",") != -1) c_info = c_info.substring(eod + 1);
             }
             // create the cereal
-            Cereal nc = new Cereal(cname,cereal.get(0),cereal.get(1),cereal.get(2),
-                    cereal.get(3), cereal.get(4));
+            Cereal nc = new Cereal(cname,cereal);
             // add the cereal to the array of cereals
             c_list.add(nc);
-            // move to the next line
-            cereal.clear();
+            // move to the next line and don't forget we need a new hashmap of data (cereal.clear() clears the HM we just created)
+            cereal = new HashMap<String,Double>();
             c_info = br.readLine();
         } // end while
 
